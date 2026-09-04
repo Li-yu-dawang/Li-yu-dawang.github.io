@@ -4,24 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        h1{color:pink}
+        li{text-shadow:2px 2px 3px orange}
+        img{border-radius:50%}
+        img:hover{box-shadow:3px 3px 8px rgba(0,0,0,0.3)}
+        .hobby-section{border:2px solid #ccc;border-radius:8px;padding:10px;width:fit-content;background-color:#FFF5EE}
+        .download-section{border:2px solid #AED6F1;border-radius:8px;padding:10px;width:fit-content;background-color:#F0F8FF}
+    </style>
 </head>
 <body><img src="海绵宝宝.jpg" width="100" height="150">
     李煜
-    <h1>我的爱好</h1>
-    <h3>热衷(有序)</h3>
-    <ol>
-        <li><progress max="100" value="95"></progress>算法&数据结构</li>
-        <li><progress max="100" value="88"></progress>独立游戏开发</li>
-        <li><progress max="100" value="66"></progress>自然语言处理</li>
-        <li><progress max="100" value="50"></progress>摄影与构图</li>
-    </ol>
+    <div class="hobby-section">
+        <h1>我的爱好</h1>
+        <h3>热衷(有序)</h3>
+        <ol>
+            <li><progress max="100" value="95"></progress>算法&数据结构</li>
+            <li><progress max="100" value="88"></progress>独立游戏开发</li>
+            <li><progress max="100" value="66"></progress>自然语言处理</li>
+            <li><progress max="100" value="50"></progress>摄影与构图</li>
+        </ol>
+    </div>
+    <div class="download-section">
     <h1>论文·下载</h1>
     <p></p><div draggable="false">桌面多功能文具收纳盒</div><span><a href="论文.docx">下载docx</a></span></p>
+    </div>
     <div>
         <input type="password" id="pwdlnput" placeholder="请输入密码">
         <button onclick="showTipWithInput()">显示</button>
     </div>
-    <p id="tip" hidden>嘻嘻</p>
+    <p id="tip" hidden>嘻嘻哈哈嘻嘻</p>
     <script>
         function showTipWithInput(){
             var input=document.getElementById("pwdlnput");
