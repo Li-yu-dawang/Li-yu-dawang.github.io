@@ -1,52 +1,391 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>李煜 - 个人主页</title>
     <style>
-        h1{color:pink}
-        li{text-shadow:2px 2px 3px orange}
-        img{border-radius:50%}
-        img:hover{box-shadow:3px 3px 8px rgba(0,0,0,0.3)}
-        .hobby-section{border:2px solid #ccc;border-radius:8px;padding:10px;width:fit-content;background-color:#FFF5EE}
-        .download-section{border:2px solid #AED6F1;border-radius:8px;padding:10px;width:fit-content;background-color:#F0F8FF}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* ====== 个人名片 ====== */
+        .profile-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .profile-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #667eea;
+            padding: 4px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-card img:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .profile-card h2 {
+            margin-top: 16px;
+            font-size: 28px;
+            color: #333;
+            letter-spacing: 2px;
+        }
+
+        .profile-card .subtitle {
+            color: #999;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+
+        /* ====== 内容网格 ====== */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        /* ====== 卡片通用样式 ====== */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        }
+
+        .card h1 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card h1::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            border-radius: 2px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .card h3 {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        /* ====== 爱好卡片 ====== */
+        .hobby-card {
+            grid-column: 1 / -1;
+        }
+
+        .hobby-card ol {
+            list-style: none;
+            counter-reset: hobby;
+        }
+
+        .hobby-card ol li {
+            counter-increment: hobby;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f5f5f5;
+            font-size: 15px;
+            color: #444;
+            transition: background 0.2s;
+            border-radius: 8px;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .hobby-card ol li:hover {
+            background: #fafbff;
+        }
+
+        .hobby-card ol li::before {
+            content: '0' counter(hobby);
+            font-size: 12px;
+            font-weight: bold;
+            color: #667eea;
+            background: #f0f0ff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .hobby-card progress {
+            flex: 1;
+            height: 8px;
+            border-radius: 4px;
+            appearance: none;
+        }
+
+        .hobby-card progress::-webkit-progress-bar {
+            background: #eee;
+            border-radius: 4px;
+        }
+
+        .hobby-card progress::-webkit-progress-value {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .hobby-card .percent {
+            font-size: 13px;
+            font-weight: bold;
+            color: #667eea;
+            min-width: 36px;
+            text-align: right;
+        }
+
+        /* ====== 下载卡片 ====== */
+        .download-card .paper-title {
+            font-size: 16px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            background: #f8f9ff;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+
+        .download-card a {
+            display: inline-block;
+            padding: 10px 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .download-card a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .download-card a::after {
+            content: ' ↓';
+        }
+
+        /* ====== 密码卡片 ====== */
+        .password-card .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .password-card input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .password-card input:focus {
+            border-color: #667eea;
+        }
+
+        .password-card button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .password-card button:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .password-card button:active {
+            transform: scale(0.95);
+        }
+
+        #tip {
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: #f0fff0;
+            border-left: 3px solid #4caf50;
+            border-radius: 8px;
+            color: #2e7d32;
+            font-size: 14px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #tip[hidden] {
+            display: none;
+        }
+
+        /* ====== 动画 ====== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.3s; }
+
+        /* ====== 响应式 ====== */
+        @media (max-width: 600px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-card {
+                padding: 24px;
+            }
+
+            .profile-card img {
+                width: 90px;
+                height: 90px;
+            }
+
+            .password-card .input-group {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
-<body><img src="海绵宝宝.jpg" width="100" height="150">
-    李煜
-    <div class="hobby-section">
-        <h1>我的爱好</h1>
-        <h3>热衷(有序)</h3>
-        <ol>
-            <li><progress max="100" value="95"></progress>算法&数据结构</li>
-            <li><progress max="100" value="88"></progress>独立游戏开发</li>
-            <li><progress max="100" value="66"></progress>自然语言处理</li>
-            <li><progress max="100" value="50"></progress>摄影与构图</li>
-        </ol>
+<body>
+    <div class="container">
+        <!-- 个人名片 -->
+        <div class="profile-card">
+            <img src="海绵宝宝.jpg" alt="头像">
+            <h2>李煜</h2>
+            <p class="subtitle">热爱技术 · 热爱生活</p>
+        </div>
+
+        <div class="content-grid">
+            <!-- 爱好 -->
+            <div class="card hobby-card">
+                <h1>我的爱好</h1>
+                <h3>热衷（有序）</h3>
+                <ol>
+                    <li>
+                        <span>算法&数据结构</span>
+                        <progress max="100" value="95"></progress>
+                        <span class="percent">95%</span>
+                    </li>
+                    <li>
+                        <span>独立游戏开发</span>
+                        <progress max="100" value="88"></progress>
+                        <span class="percent">88%</span>
+                    </li>
+                    <li>
+                        <span>自然语言处理</span>
+                        <progress max="100" value="66"></progress>
+                        <span class="percent">66%</span>
+                    </li>
+                    <li>
+                        <span>摄影与构图</span>
+                        <progress max="100" value="50"></progress>
+                        <span class="percent">50%</span>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- 论文下载 -->
+            <div class="card download-card">
+                <h1>论文·下载</h1>
+                <div class="paper-title">桌面多功能文具收纳盒</div>
+                <a href="论文.docx">下载 docx</a>
+            </div>
+
+            <!-- 密码验证 -->
+            <div class="card password-card">
+                <h1>私密内容</h1>
+                <div class="input-group">
+                    <input type="password" id="pwdInput" placeholder="请输入密码">
+                    <button onclick="showTipWithInput()">显示</button>
+                </div>
+                <p id="tip" hidden>嘻嘻哈哈嘻嘻</p>
+            </div>
+        </div>
     </div>
-    <div class="download-section">
-    <h1>论文·下载</h1>
-    <p></p><div draggable="false">桌面多功能文具收纳盒</div><span><a href="论文.docx">下载docx</a></span></p>
-    </div>
-    <div>
-        <input type="password" id="pwdlnput" placeholder="请输入密码">
-        <button onclick="showTipWithInput()">显示</button>
-    </div>
-    <p id="tip" hidden>嘻嘻哈哈嘻嘻</p>
+
     <script>
-        function showTipWithInput(){
-            var input=document.getElementById("pwdlnput");
-            var password=input.value;
-            var correctPassword='123456';
-            if(password==correctPassword){
-                document.getElementById("tip").hidden=false;
+        function showTipWithInput() {
+            var input = document.getElementById("pwdInput");
+            var password = input.value;
+            var correctPassword = '123456';
+            var tip = document.getElementById("tip");
+
+            if (password === correctPassword) {
+                tip.hidden = false;
+                tip.style.animation = 'none';
+                tip.offsetHeight;
+                tip.style.animation = 'fadeIn 0.3s ease';
                 alert("密码正确");
-            }
-            else{
-                document.getElementById("tip").hidden=true;
+            } else {
+                tip.hidden = true;
                 alert("密码错误");
-                input.value="";
+                input.value = "";
                 input.focus();
             }
         }
